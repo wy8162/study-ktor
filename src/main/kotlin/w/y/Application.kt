@@ -83,6 +83,7 @@ fun Application.module() {
 
 private fun Application.configureShutdownHook(httpClient: HttpClient) {
     environment.monitor.subscribe(ApplicationStopping) {
+        log.info("Shutting down the application ...")
         httpClient.close()
     }
 }
