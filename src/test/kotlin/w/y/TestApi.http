@@ -12,8 +12,15 @@ Accept: application/json
 
 ###
 # Get one customer
-GET http://localhost:8080/api/v1/customer/100
+GET http://localhost:8080/api/v1/customer/200
 
 ###
 # Add one customer
 
+###
+# List all orders
+GET http://localhost:8080/api/v1/order
+Accept: application/json
+
+###
+GET http://localhost:8080/hello

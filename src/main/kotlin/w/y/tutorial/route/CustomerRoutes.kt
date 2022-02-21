@@ -1,11 +1,11 @@
-package w.y.route
+package w.y.tutorial.route
 
 import io.ktor.application.*
 import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
-import w.y.model.*
+import w.y.tutorial.model.*
 
 fun Application.registerCustomerRoutes() {
     routing {
@@ -19,7 +19,7 @@ fun Route.customerRouting() {
             if (customerStorage.isNotEmpty()) {
                 call.respond(customerStorage)
             } else {
-                call.respondText("NOT FOUND", status = HttpStatusCode.NotFound)
+                call.respondText("NOT FOUND", contentType = ContentType.Text.Plain, status = HttpStatusCode.NotFound)
             }
         }
         get("{id}") {
@@ -39,7 +39,7 @@ fun Route.customerRouting() {
             val customer = call.receive<Customer>()
 
             customerStorage.add(customer)
-            call.respondText("Customer Created", status = HttpStatusCode.Created)
+            call.respondText("Customer Created", contentType = ContentType.Text.Plain, status = HttpStatusCode.Created)
         }
         delete("{id}") {
             val id = call.parameters["id"] ?: return@delete call.respond(
@@ -48,9 +48,9 @@ fun Route.customerRouting() {
             )
 
             if (customerStorage.removeIf { it.id == id}) {
-                call.respondText("DELETED", status = HttpStatusCode.Accepted)
+                call.respondText("DELETED", contentType = ContentType.Text.Plain, status = HttpStatusCode.Accepted)
             } else {
-                call.respondText("NOT FOUND", status = HttpStatusCode.NotFound)
+                call.respondText("NOT FOUND", contentType = ContentType.Text.Plain, status = HttpStatusCode.NotFound)
             }
         }
     }

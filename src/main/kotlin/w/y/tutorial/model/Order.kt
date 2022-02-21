@@ -1,4 +1,4 @@
-package w.y.model
+package w.y.tutorial.model
 
 import kotlinx.serialization.Serializable
 
@@ -8,7 +8,8 @@ data class Order(val number: String, val contents: List<OrderItem>)
 @Serializable
 data class OrderItem(val item: String, val amount: Int, val price: Double)
 
-val orderStorage = listOf(Order(
+val orderStorage = listOf(
+    Order(
     "2020-04-06-01", listOf(
         OrderItem("Ham Sandwich", 2, 5.50),
         OrderItem("Water", 1, 1.50),

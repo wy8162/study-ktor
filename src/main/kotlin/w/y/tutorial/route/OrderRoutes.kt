@@ -1,10 +1,10 @@
-package w.y.route
+package w.y.tutorial.route
 
 import io.ktor.application.*
 import io.ktor.http.*
 import io.ktor.response.*
 import io.ktor.routing.*
-import w.y.model.*
+import w.y.tutorial.model.*
 
 fun Application.registerOrderRoutes() {
     routing {
