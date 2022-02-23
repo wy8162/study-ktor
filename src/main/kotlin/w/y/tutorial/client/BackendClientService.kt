@@ -38,11 +38,10 @@ object Backend {
     suspend fun getCustomerById(id: String?): Customer? {
         val response = httpClient.get<HttpResponse>("$URL_CUSTOMER/$id")
 
-        when( response.status ) {
-            HttpStatusCode.OK -> {
-                return response.receive<Customer>()
-            }
-            else -> return null
+        return when( response.status )
+        {
+            HttpStatusCode.OK -> response.receive<Customer>()
+            else -> null
         }
 
     }

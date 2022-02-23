@@ -12,6 +12,7 @@ import io.ktor.server.netty.*
 import io.ktor.util.*
 import kotlinx.serialization.json.*
 import org.slf4j.event.*
+import w.y.bookstore.*
 import w.y.tutorial.*
 import w.y.tutorial.route.*
 
@@ -42,6 +43,7 @@ fun Application.module() {
     registerCustomerRoutes()
     registerOrderRoutes()
     registerClientRoutes()
+    registerBookStoreRoutes()
 
 
     // Some routes for reference
