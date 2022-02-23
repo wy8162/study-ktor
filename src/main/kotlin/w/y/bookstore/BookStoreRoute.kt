@@ -29,17 +29,17 @@ private fun Route.bookStoreRoute() {
             else
                 call.respond(status = HttpStatusCode.OK, book)
         }
-        post { // Add new book
+        put { // Add new book
             var bookDto = call.receive<BookDto>()
             val book = BookStore.addBook(bookDto)
             call.respond(status = HttpStatusCode.Created, book!!)
         }
-        put("/{id}") { // Update new book
-            val bookDto = call.receive<BookDto>()
+        post("/{id}") { // Update new book
+            val bookDto = call.receive(BookDto::class) // Another way to receive
             val id = call.parameters["id"]
 
             if (id == null || bookDto == null)
-                return@put call.respondText("BAD REQUEST - Invalid ID", status = HttpStatusCode.BadRequest)
+                return@post call.respondText("BAD REQUEST - Invalid ID", status = HttpStatusCode.BadRequest)
 
             val book = BookStore.updateBook(Book(id, bookDto.name, bookDto.authorId, bookDto.qty))
             if (book != null) call.respond(status = HttpStatusCode.Created, book)
