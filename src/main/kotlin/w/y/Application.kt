@@ -1,6 +1,7 @@
 package w.y
 
 import io.ktor.application.*
+import io.ktor.auth.*
 import io.ktor.client.*
 import io.ktor.features.*
 import io.ktor.http.*
@@ -20,6 +21,40 @@ import w.y.tutorial.route.*
 fun main(args: Array<String>): Unit = EngineMain.main(args)
 
 fun Application.module() {
+
+    // Handles failures and provide more information.
+    install(StatusPages) {
+        statusFile(
+            HttpStatusCode.InternalServerError,
+            HttpStatusCode.NotFound,
+            filePattern = "errors/error404.html"
+        )
+        exception<NotFoundException> { cause ->
+            call.respond(HttpStatusCode.NotFound)
+            log.error(cause.localizedMessage)
+            throw cause
+        }
+        exception<BadRequestException> { cause ->
+            call.respondText("Bad request.")
+            log.error(cause.localizedMessage)
+            throw cause
+        }
+    }
+
+    authentication {
+        // ClientRoutes uses these authentications.
+        basic(name = "basicAuth") {
+            realm = "basicAuthRealm"
+            validate { credentials ->
+                if (credentials.name == "wyang" && credentials.password == "wyang") {
+                    UserIdPrincipal(credentials.name)
+                } else {
+                    null
+                }
+            }
+        }
+    }
+
     install(DefaultHeaders) {
         header("X-Engine", "Ktor") // will send this header with each response
     }
@@ -33,6 +68,7 @@ fun Application.module() {
         }
     }
     install(ContentNegotiation) {
+        // Install JSON converter
         json(Json {
             prettyPrint = true
             isLenient = true

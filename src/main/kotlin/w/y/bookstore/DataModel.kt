@@ -18,7 +18,7 @@ data class CartItem(val bookId : String, var qty: Int, var price: Double)
 data class User(val id: String, val name: String)
 
 object BookStore {
-    val bookStore : MutableMap<String, Book>
+    private val bookStore : MutableMap<String, Book>
 
     init {
         var id = 0

@@ -30,6 +30,12 @@ private fun Route.bookStoreRoute() {
                 call.respond(status = HttpStatusCode.OK, book)
         }
         put { // Add new book
+            // Receive data and deserialize it to object
+            // https://ktor.io/docs/serialization.html#receive_data
+            // The content type of the request will be used to choose the
+            // converter.
+            //
+            // To send data, the converter is chosen based on the Accept header.
             var bookDto = call.receive<BookDto>()
             val book = BookStore.addBook(bookDto)
             call.respond(status = HttpStatusCode.Created, book!!)
