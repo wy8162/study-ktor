@@ -42,11 +42,14 @@ fun Application.module() {
     }
 
     authentication {
+        val username = environment.config.propertyOrNull("server.test.username")?.getString()
+        val password = environment.config.propertyOrNull("server.test.password")?.getString()
+
         // ClientRoutes uses these authentications.
         basic(name = "basicAuth") {
             realm = "basicAuthRealm"
             validate { credentials ->
-                if (credentials.name == "wyang" && credentials.password == "wyang") {
+                if (credentials.name == username && credentials.password == password) {
                     UserIdPrincipal(credentials.name)
                 } else {
                     null
