@@ -1,0 +1,19 @@
+== To run the performance script
+
+=== Run in from Docker Container
+docker run -i grafana/k6 run - <./k6perf.js
+
+[NOTE]
+====
+On Windows or Mac OS X, use "host.docker.internal" to access host from inside the container.
+====
+
+== Mac OS X
+
+. Install k6 (brew install k6)
+. Modify k6perf.js to use "http://localhost:8080"
+. Run the performance with k6
+
+```shell
+$ k6 run k6perf.js
+```

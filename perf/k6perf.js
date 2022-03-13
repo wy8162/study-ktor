@@ -10,7 +10,7 @@ export let options = {
 };
 
 export default function () {
-  let res = http.get('http://localhost:8080/weather/usa');
+  let res = http.get('http://host.docker.internal:8080/weather/usa');
   check(res, {'status was 200': r => r.status == 200});
   sleep(1);
 };
